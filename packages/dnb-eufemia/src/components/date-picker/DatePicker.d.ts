@@ -25,8 +25,12 @@ type DatePickerSuffix =
   | React.ReactNode;
 type DatePickerDirection = 'auto' | 'top' | 'bottom';
 type DatePickerAlignPicker = 'auto' | 'left' | 'right';
+
 export interface DatePickerProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'ref', 'onBlur'>,
+  extends Omit<
+      React.HTMLProps<HTMLElement>,
+      'ref' | 'label' | 'size' | 'onBlur'
+    >,
     SpacingProps {
   id?: string;
   title?: string;
