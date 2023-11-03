@@ -3,7 +3,7 @@
  *
  */
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import classnames from 'classnames'
 import {
   extendPropsWithContext,
@@ -22,6 +22,8 @@ import {
   DynamicElementParams,
   SpacingProps,
 } from '../../shared/types'
+import { FieldHelpProps } from '../../extensions/forms'
+import HelpButton from '../HelpButton'
 
 export type FormLabelProps = {
   forId?: string
@@ -44,7 +46,7 @@ export type FormLabelProps = {
   sr_only?: boolean
   /** @deprecated use labelDirection instead (was not documented before) */
   label_direction?: 'vertical' | 'horizontal'
-}
+} & FieldHelpProps
 
 export type FormLabelAllProps = FormLabelProps &
   React.HTMLAttributes<HTMLLabelElement> &
@@ -74,6 +76,7 @@ export default function FormLabel(localProps: FormLabelAllProps) {
     innerRef,
     className,
     children,
+    help,
 
     /** @deprecated can be removed in v11 */
     for_id,
@@ -88,14 +91,21 @@ export default function FormLabel(localProps: FormLabelAllProps) {
     !srOnly &&
     (typeof props.onClick === 'function' || forId || for_id)
 
+  const [helpContentElement, setHelpContentElement] = useState(null)
+  useEffect(() => {
+    setHelpContentElement(document.getElementById(help?.selector))
+  }, [help])
+
+  const isVertical = isTrue(vertical) || label_direction === 'vertical'
+
   const params = {
     className: classnames(
       'dnb-form-label',
-      (isTrue(vertical) || label_direction === 'vertical') &&
-        `dnb-form-label--vertical`,
+      isVertical && `dnb-form-label--vertical`,
       (srOnly || isTrue(sr_only)) && 'dnb-sr-only',
       size && `dnb-h--${size}`,
       isInteractive && 'dnb-form-label--interactive',
+      help && `dnb-form-label--has-help`,
       createSkeletonClass('font', skeleton, context),
       createSpacingClasses(props),
       className
@@ -109,7 +119,34 @@ export default function FormLabel(localProps: FormLabelAllProps) {
   skeletonDOMAttributes(params, skeleton, context)
   validateDOMAttributes(localProps, params)
 
-  return <Element {...params}>{text || children}</Element>
+  const content = (
+    <>
+      <Element {...params}>{text || children}</Element>
+      {help && (
+        <HelpButton
+          title={help.title}
+          displayMethod="inline"
+          contentElement={helpContentElement}
+        >
+          {help.contents}
+        </HelpButton>
+      )}
+    </>
+  )
+
+  return help && isVertical ? (
+    <div
+      className={classnames(
+        'dnb-form-label-wrapper',
+        isVertical && `dnb-form-label-wrapper--vertical`,
+        isTrue(sr_only) && 'dnb-sr-only'
+      )}
+    >
+      {content}
+    </div>
+  ) : (
+    <>{content}</>
+  )
 }
 
 FormLabel._supportsSpacingProps = true
