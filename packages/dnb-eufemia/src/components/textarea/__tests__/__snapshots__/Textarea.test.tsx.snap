@@ -34,16 +34,40 @@ exports[`Textarea scss has to match style dependencies css 1`] = `
   font-size: var(--font-size-basis);
   color: inherit;
 }
+.dnb-form-label--has-help {
+  margin-right: 0.5rem;
+}
+.dnb-form-label + .dnb-help-button {
+  margin-right: 1rem;
+}
 .dnb-form-label--vertical {
   display: block;
   margin-right: 0;
   margin-bottom: 0.5rem;
+}
+.dnb-form-label--vertical + .dnb-help-button {
+  margin-right: 0;
 }
 .dnb-form-label[for]:not([disabled]) {
   user-select: none;
 }
 .dnb-form-label[disabled] {
   cursor: not-allowed;
+}
+
+.dnb-form-label-wrapper {
+  display: inline-block;
+  margin-right: 1rem;
+}
+.dnb-form-label-wrapper .dnb-form-label {
+  margin-right: 0.5rem;
+}
+.dnb-form-label-wrapper--vertical {
+  display: block;
+}
+.dnb-form-label-wrapper--vertical .dnb-form-label {
+  display: inline-block;
+  margin-right: 0.5rem;
 }
 
 legend.dnb-form-label {
