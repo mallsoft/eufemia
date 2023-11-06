@@ -126,7 +126,7 @@ export default function FormLabel(localProps: FormLabelAllProps) {
         <HelpButton
           title={help.title}
           displayMethod="inline"
-          contentId={help.identifier}
+          contentId={help.contentId}
         >
           {help.contents}
         </HelpButton>
