@@ -20,12 +20,12 @@ declare global {
 }
 
 export type EventEmitterId = string
-export type EventEmitterData = Record<string, unknown>
+export type EventEmitterDataFallback = Record<string, unknown>
+export type EventEmitterData<T = EventEmitterDataFallback> = T
 export type EventEmitterListener = (data: EventEmitterData) => void
-export type EventEmitterEEE = Record<
-  EventEmitterId,
-  EventEmitterScopeObject
->
+export type EventEmitterEEE =
+  | Record<EventEmitterId, EventEmitterScopeObject>
+  | unknown
 export type EventEmitterScope =
   | ({
       __EEE__?: EventEmitterEEE
@@ -38,17 +38,19 @@ export type EventEmitterScopeObject = {
   data: EventEmitterData
 }
 
-class EventEmitter {
-  static createInstance(id: EventEmitterId) {
-    return new EventEmitter(id)
+class EventEmitter<T = EventEmitterDataFallback> {
+  static createInstance<T>(id: EventEmitterId) {
+    return new EventEmitter<T>(id)
   }
 
-  static __EEE__?: Record<EventEmitterId, EventEmitterScopeObject>
+  static __EEE__?: EventEmitterEEE
   id: EventEmitterId
   listeners: Array<EventEmitterListener>
 
   constructor(id: EventEmitterId) {
-    scope.__EEE__ = scope.__EEE__ || {}
+    if (!scope.__EEE__) {
+      scope.__EEE__ = {}
+    }
     if (!scope.__EEE__[id]) {
       scope.__EEE__[id] = {
         instances: [],
@@ -64,7 +66,7 @@ class EventEmitter {
 
     return this
   }
-  update = (data: EventEmitterData) => {
+  update = (data: EventEmitterData<T>) => {
     this.set(data)
     scope.__EEE__[this.id].instances.forEach((instance) => {
       instance.listeners.forEach((fn) => {
@@ -74,7 +76,7 @@ class EventEmitter {
       })
     })
   }
-  set = (data: EventEmitterData) => {
+  set = (data: EventEmitterData<T>) => {
     scope.__EEE__[this.id].data = {
       ...scope.__EEE__[this.id].data,
       ...data,
