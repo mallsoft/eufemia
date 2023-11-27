@@ -545,7 +545,7 @@ export default class DatePickerInput extends React.PureComponent {
         // this makes it possible to use a vanilla <input /> like: input_element="input"
         const DateField =
           input_element && React.isValidElement(input_element)
-            ? input_element
+            ? input_element.type
             : InputElement
 
         const inputSizeClassName =
@@ -702,7 +702,7 @@ export default class DatePickerInput extends React.PureComponent {
     } = this.props
 
     const { focusState } = this.state
-
+    console.log('this._shortcuts', this._shortcuts)
     validateDOMAttributes(this.props, attributes)
     validateDOMAttributes(null, submitAttributes)
 
