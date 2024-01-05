@@ -370,11 +370,27 @@ describe('Field.Number', () => {
     })
   })
 
-  it('should validate with ARIA rules', async () => {
-    const result = render(
-      <Field.Number label="Label" required validateInitially />
-    )
+  describe('ARIA', () => {
+    it('should have aria-required', () => {
+      render(<Field.Number required />)
 
-    expect(await axeComponent(result)).toHaveNoViolations()
+      const input = document.querySelector('input')
+      expect(input).toHaveAttribute('aria-required', 'true')
+    })
+
+    it('should have aria-invalid', () => {
+      render(<Field.Number value={1} minimum={2} validateInitially />)
+
+      const input = document.querySelector('input')
+      expect(input).toHaveAttribute('aria-invalid', 'true')
+    })
+
+    it('should validate with ARIA rules', async () => {
+      const result = render(
+        <Field.Number label="Label" required validateInitially />
+      )
+
+      expect(await axeComponent(result)).toHaveNoViolations()
+    })
   })
 })

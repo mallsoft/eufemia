@@ -179,6 +179,7 @@ export default {
       selectionClearSelected: 'Fjern valgt verdi',
       countryCodeLabel: 'Landskode',
       dateLabel: 'Dato',
+      dateErrorRequired: 'Du må angi en gyldig dato',
       expiryLabel: 'Utløpsdato',
       emailErrorRequired: 'Du må fylle inn e-post',
       emailErrorPattern: 'Dette er ikke en gyldig e-postadresse',

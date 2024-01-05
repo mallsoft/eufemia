@@ -76,11 +76,50 @@ describe('Field.Toggle', () => {
             valueOn="on"
             valueOff="off"
             variant="button"
-            value="on"
+            required
+            validateInitially
           />
         )
 
-        expect(await axeComponent(result)).toHaveNoViolations()
+        expect(
+          await axeComponent(result, {
+            rules: {
+              // Because of aria-required is not allowed on buttons – but VO still reads it
+              'aria-allowed-attr': { enabled: false },
+            },
+          })
+        ).toHaveNoViolations()
+      })
+
+      it('should have aria-required', () => {
+        render(
+          <Toggle
+            label="Label"
+            valueOn="on"
+            valueOff="off"
+            variant="button"
+            required
+          />
+        )
+
+        const button = document.querySelector('button')
+        expect(button).toHaveAttribute('aria-required', 'true')
+      })
+
+      it('should have aria-invalid', () => {
+        render(
+          <Toggle
+            label="Label"
+            valueOn="on"
+            valueOff="off"
+            variant="button"
+            required
+            validateInitially
+          />
+        )
+
+        const button = document.querySelector('button')
+        expect(button).toHaveAttribute('aria-invalid', 'true')
       })
     })
 
@@ -128,11 +167,56 @@ describe('Field.Toggle', () => {
             valueOn="on"
             valueOff="off"
             variant="buttons"
-            value="on"
+            required
+            validateInitially
           />
         )
 
-        expect(await axeComponent(result)).toHaveNoViolations()
+        expect(
+          await axeComponent(result, {
+            rules: {
+              // Because of aria-required is not allowed on buttons – but VO still reads it
+              'aria-allowed-attr': { enabled: false },
+            },
+          })
+        ).toHaveNoViolations()
+      })
+
+      it('should have aria-required', () => {
+        render(
+          <Toggle
+            label="Label"
+            valueOn="on"
+            valueOff="off"
+            variant="buttons"
+            required
+          />
+        )
+
+        const [first, second] = Array.from(
+          document.querySelectorAll('button')
+        )
+        expect(first).toHaveAttribute('aria-required', 'true')
+        expect(second).toHaveAttribute('aria-required', 'true')
+      })
+
+      it('should have aria-invalid', () => {
+        render(
+          <Toggle
+            label="Label"
+            valueOn="on"
+            valueOff="off"
+            variant="buttons"
+            required
+            validateInitially
+          />
+        )
+
+        const [first, second] = Array.from(
+          document.querySelectorAll('button')
+        )
+        expect(first).toHaveAttribute('aria-invalid', 'true')
+        expect(second).toHaveAttribute('aria-invalid', 'true')
       })
     })
 
@@ -177,11 +261,50 @@ describe('Field.Toggle', () => {
             valueOn="on"
             valueOff="off"
             variant="checkbox-button"
-            value="on"
+            required
+            validateInitially
           />
         )
 
-        expect(await axeComponent(result)).toHaveNoViolations()
+        expect(
+          await axeComponent(result, {
+            rules: {
+              // Because of aria-required is not allowed on buttons – but VO still reads it
+              'aria-allowed-attr': { enabled: false },
+            },
+          })
+        ).toHaveNoViolations()
+      })
+
+      it('should have aria-required', () => {
+        render(
+          <Toggle
+            label="Label"
+            valueOn="on"
+            valueOff="off"
+            variant="checkbox-button"
+            required
+          />
+        )
+
+        const button = document.querySelector('button')
+        expect(button).toHaveAttribute('aria-required', 'true')
+      })
+
+      it('should have aria-invalid', () => {
+        render(
+          <Toggle
+            label="Label"
+            valueOn="on"
+            valueOff="off"
+            variant="checkbox-button"
+            required
+            validateInitially
+          />
+        )
+
+        const button = document.querySelector('button')
+        expect(button).toHaveAttribute('aria-invalid', 'true')
       })
     })
 
@@ -224,11 +347,43 @@ describe('Field.Toggle', () => {
             valueOn="on"
             valueOff="off"
             variant="checkbox"
-            value="on"
+            required
+            validateInitially
           />
         )
 
         expect(await axeComponent(result)).toHaveNoViolations()
+      })
+
+      it('should have aria-required', () => {
+        render(
+          <Toggle
+            label="Label"
+            valueOn="on"
+            valueOff="off"
+            variant="checkbox"
+            required
+          />
+        )
+
+        const checkbox = document.querySelector('input')
+        expect(checkbox).toHaveAttribute('aria-required', 'true')
+      })
+
+      it('should have aria-invalid', () => {
+        render(
+          <Toggle
+            label="Label"
+            valueOn="on"
+            valueOff="off"
+            variant="checkbox"
+            required
+            validateInitially
+          />
+        )
+
+        const checkbox = document.querySelector('input')
+        expect(checkbox).toHaveAttribute('aria-invalid', 'true')
       })
     })
   })

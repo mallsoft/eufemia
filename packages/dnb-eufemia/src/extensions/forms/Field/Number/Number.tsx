@@ -177,6 +177,7 @@ function NumberComponent(props: Props) {
     minimum,
     maximum,
     disabled,
+    ariaAttributes,
     info,
     warning,
     error,
@@ -299,6 +300,7 @@ function NumberComponent(props: Props) {
     onBlur: handleBlur,
     onChange: handleChange,
     disabled,
+    ...ariaAttributes,
     status: error ? 'error' : undefined,
     stretch: width !== undefined,
     suffix:

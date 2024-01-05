@@ -785,6 +785,26 @@ describe('Field.String', () => {
   })
 
   describe('ARIA', () => {
+    it('should have aria-required', () => {
+      render(<Field.String required />)
+
+      const input = document.querySelector('input')
+      expect(input).toHaveAttribute('aria-required', 'true')
+    })
+
+    it('should have aria-invalid', () => {
+      render(
+        <Field.String
+          value="abc"
+          schema={{ type: 'string', minLength: 6 }}
+          validateInitially
+        />
+      )
+
+      const input = document.querySelector('input')
+      expect(input).toHaveAttribute('aria-invalid', 'true')
+    })
+
     it('should validate with ARIA rules', async () => {
       const result = render(
         <Field.String label="Label" required validateInitially />
