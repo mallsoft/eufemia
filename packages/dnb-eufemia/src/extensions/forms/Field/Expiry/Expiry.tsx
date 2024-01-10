@@ -29,8 +29,6 @@ function Expiry(props: ExpiryProps) {
     help,
     disabled,
     value = '',
-    labelDescription,
-    labelSecondary,
     layout = 'vertical',
     required,
     handleFocus,
@@ -53,8 +51,6 @@ function Expiry(props: ExpiryProps) {
   return (
     <FieldBlock
       className={classnames('dnb-forms-field-expiry', className)}
-      labelSecondary={labelSecondary}
-      labelDescription={labelDescription}
       info={info}
       warning={warning}
       error={error}
