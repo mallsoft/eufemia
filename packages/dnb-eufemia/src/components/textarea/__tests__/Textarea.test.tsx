@@ -296,6 +296,19 @@ describe('Textarea component', () => {
     expect(ref.current.tagName).toBe('TEXTAREA')
     expect(ref.current).toBeInstanceOf(HTMLTextAreaElement)
   })
+
+  it('should render characterCounter', async () => {
+    render(<Textarea maxLength={6} characterCounter value="foo" />)
+
+    const counter = document.querySelector('.dnb-textarea__counter')
+    const textarea = document.querySelector('textarea')
+
+    expect(counter).toHaveTextContent('3/6')
+
+    await userEvent.type(textarea, 'bar')
+
+    expect(counter).toHaveTextContent('6/6')
+  })
 })
 
 describe('Textarea scss', () => {

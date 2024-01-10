@@ -64,6 +64,11 @@
     padding-left: 1rem;
   }
 
+  &__counter {
+    margin-top: 1rem;
+    margin-left: -0.5rem;
+  }
+
   &__textarea {
     position: relative;
     z-index: 2;

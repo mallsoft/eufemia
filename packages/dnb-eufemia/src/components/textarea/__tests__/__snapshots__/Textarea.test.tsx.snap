@@ -179,6 +179,10 @@ button .dnb-form-status__text {
 .dnb-textarea__suffix.dnb-suffix {
   padding-left: 1rem;
 }
+.dnb-textarea__counter {
+  margin-top: 1rem;
+  margin-left: -0.5rem;
+}
 .dnb-textarea__textarea {
   position: relative;
   z-index: 2;

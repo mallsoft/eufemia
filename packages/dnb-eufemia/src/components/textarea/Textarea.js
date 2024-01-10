@@ -76,6 +76,7 @@ export default class Textarea extends React.PureComponent {
     stretch: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     disabled: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     skeleton: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+    characterCounter: PropTypes.bool,
     autoresize: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     autoresize_max_rows: PropTypes.oneOfType([
       PropTypes.string,
@@ -128,6 +129,7 @@ export default class Textarea extends React.PureComponent {
     skeleton: null,
     autoresize: null,
     autoresize_max_rows: null,
+    characterCounter: null,
     textarea_class: null,
     class: null,
     textarea_attributes: null,
@@ -367,7 +369,7 @@ export default class Textarea extends React.PureComponent {
       textarea_attributes,
       class: _className,
       className,
-
+      characterCounter,
       autoresize,
       autoresize_max_rows, //eslint-disable-line
       id: _id, //eslint-disable-line
@@ -539,6 +541,10 @@ export default class Textarea extends React.PureComponent {
               </Suffix>
             )}
           </span>
+
+          {characterCounter && props.maxLength && (
+            <span className="dnb-textarea__counter">{`${value.length}/${props.maxLength}`}</span>
+          )}
         </span>
       </span>
     )
